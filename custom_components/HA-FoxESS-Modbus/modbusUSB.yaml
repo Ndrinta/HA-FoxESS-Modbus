@@ -206,7 +206,7 @@
       precision: 3
       input_type: input
     - name: "CT2 Meter"
-      scan_interval: 1
+      scan_interval: 5
       slave: 247
       address: 11022
       state_class: measurement

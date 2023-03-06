@@ -9,7 +9,7 @@
 #
 - name: HA-FoxESS-Modbus-LAN
   type: tcp
-  host: !secret FoxESSInverterIP
+  host: !secret FoxESSRS485
   port: 502
   # ---------------------------------------------------------------------------
 

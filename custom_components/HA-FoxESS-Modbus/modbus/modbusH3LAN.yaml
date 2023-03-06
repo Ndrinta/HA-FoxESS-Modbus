@@ -8,7 +8,7 @@
 #
 - name: HA-FoxESS-Modbus-LAN
   type: tcp
-  host: 192.168.178.189 # set to USR devices ip address
+  host: FoxESSInverterIP # set to USR devices ip address
   port: 502
   #
   # ---------------------------------------------------------------------------

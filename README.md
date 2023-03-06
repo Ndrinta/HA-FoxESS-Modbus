@@ -5,67 +5,91 @@
    </br>
 </h2>
 
-
 **A community maintained Home Assistant integration using local native polling of Modbus data using RS485 to enable near realtime data access, with no reliance on the FoxESS cloud portal**
 
 ![image](https://user-images.githubusercontent.com/6324545/166502285-eb0ca405-05a3-4722-a698-36e3e6b0f60d.png)
 
-
 ---
 
-Connecting to your inverter can be acheived in two ways:  
-* Using the inverters LAN port connected to your router/switch (no additional hardware required)  
+Connecting to your inverter can be acheived in two ways:
+
+* Using the inverters LAN port connected to your router/switch (no additional hardware required)
 * 22/12/22 - Manager version 1.56 appears to break the LAN connectivity option!
-  
-* Connecting to the COM port using a [RS485 to USB](https://www.amazon.co.uk/dp/B078X5H8H7?ref_=cm_sw_r_cp_ud_dp_CR8FQK7A50FNCH530QJP) adapter or [WIFI/LAN RS485](https://www.amazon.co.uk/dp/B07DNWM62H?ref_=cm_sw_r_cp_ud_dp_BPWX7Z53PDES4WJ9JY89) converter  
+* Connecting to the COM port using a [RS485 to USB](https://www.amazon.co.uk/dp/B078X5H8H7?ref_=cm_sw_r_cp_ud_dp_CR8FQK7A50FNCH530QJP) adapter or [WIFI/LAN RS485](https://www.amazon.co.uk/dp/B07DNWM62H?ref_=cm_sw_r_cp_ud_dp_BPWX7Z53PDES4WJ9JY89) converter
 
 ⚠️ Additional hardware requires basic electronics competencies to connect the two additional wires for the RS485 interface to the inverters com connector.⚠️
 
 ---
 
-
 ## Supported Hardware
-**Hybrid Series** <br> <img align="right" src="https://user-images.githubusercontent.com/6324545/166170598-7077d481-4d65-49b5-9816-1873c97dd853.png" >
-✅ H1-3.0-E <br>
-✅ H1-3.7-E <br>
-✅ H1-4.6-E <br>
-✅ H1-5.0-E <br>
-✅ H1-6.0-E <br>
-**AC Series** <br>
-✅ AC-3.0-E <br>
-✅ AC-3.7-E <br>
-✅ AC-4.6-E <br>
-✅ AC-5.0-E <br>
-✅ AC-6.0-E <br>
-**AIO Series** <br>
-✅ AIO-H1-3.0 <br>
-✅ AIO-H1-3.7 <br>
-✅ AIO-H1-4.6 <br>
-✅ AIO-H1-5.0 <br>
-✅ AIO-H1-6.0 <br>
 
-**For T Series - See [this alternative project](https://github.com/assembly12/Foxess-T-series-ESPHome-Home-Assistant) by [assembly12](https://github.com/assembly12)** <br>
+**Hybrid Series** `<br>` `<img align="right" src="https://user-images.githubusercontent.com/6324545/166170598-7077d481-4d65-49b5-9816-1873c97dd853.png" >`
+✅ H1-3.0-E `<br>`
+✅ H1-3.7-E `<br>`
+✅ H1-4.6-E `<br>`
+✅ H1-5.0-E `<br>`
+✅ H1-6.0-E `<br>`
+**AC Series** `<br>`
+✅ AC-3.0-E `<br>`
+✅ AC-3.7-E `<br>`
+✅ AC-4.6-E `<br>`
+✅ AC-5.0-E `<br>`
+✅ AC-6.0-E `<br>`
+**AIO Series** `<br>`
+✅ AIO-H1-3.0 `<br>`
+✅ AIO-H1-3.7 `<br>`
+✅ AIO-H1-4.6 `<br>`
+✅ AIO-H1-5.0 `<br>`
+✅ AIO-H1-6.0 `<br>`
+
+**For T Series - See [this alternative project](https://github.com/assembly12/Foxess-T-series-ESPHome-Home-Assistant) by [assembly12](https://github.com/assembly12)** `<br>`
 
 ---
 
 <p>The aim of this project is to enable the full use of the Energy dashboard in Home Assistant and is a fully functional replacement of the FoxESS App for reporting needs.</p>
 
-## HACS Specific Installation  
+## HACS Specific Installation
+
 * Add this repository to your HACS custom integrations
 * Install from HACS
 
 ## Manual Specific installation
+
 * Hardware configuration instructions can be found on the [wiki](https://github.com/StealthChesnut/HA-FoxESS-Modbus/wiki/)
-* Copy the Required modbus file (USB or LAN) file to /config/custom_components/HA-FoxESS-Modbus/modbusLAN.yaml
+* Copy the HA-FoxESS-Modbus folder to ~/config/custom_components/
 
 ## Then, Common Installation Steps
 
 * Create a full backup of your HA instance including the configuration.yaml file
-* Copy the Required modbus line (USB or LAN) and following contents of the [configuration.yaml](https://github.com/StealthChesnut/HA-FoxESS-Modbus/blob/main/custom_components/HA-FoxESS-Modbus/configuration.yaml) file to your config file
-* For LAN, create your Secrets file entry
-* Check your config is valid, then Restart HA
-* Map energy dashboard as per below example and enjoy configuring dashboards using near realtime data.
+* Copy the Required modbus line (USB or LAN) to the HA [configuration.yaml](https://github.com/StealthChesnut/HA-FoxESS-Modbus/blob/main/custom_components/HA-FoxESS-Modbus/configuration.yaml) file
 
+  ```
+  homeassistant:
+    packages:
+      foxess: !include <file>
+
+  ```
+
+  Replace `<file>` with the configuation that suits your inverter and communications. Valid entries are:
+
+  `/config/custom_components/HA-FoxESS-Modbus/configurationUSB.yaml`
+
+  `/config/custom_components/HA-FoxESS-Modbus/configurationLAN.yaml`
+
+  `/config/custom_components/HA-FoxESS-Modbus/configurationWIFI.yaml`
+
+  `/config/custom_components/HA-FoxESS-Modbus/configurationH3USB.yaml`
+
+  `/config/custom_components/HA-FoxESS-Modbus/configurationH3LAN.yaml`
+
+  For all configurations create your Secrets file entries, copy both entries and fill out the one for your communications configuration
+* ```
+  FoxESSInverterIP: <IP address of built in LAN>
+  FoxESSRS485: <IP address of RS485 WiFi or path of RS485 serial port>
+  ```
+
+  Check your config is valid, then Restart HA
+* Map energy dashboard as per below example and enjoy configuring dashboards using near realtime data.
 
 [Step by step walkthrough of the setup](https://youtu.be/jRTE9UZkpHU)
 ![image](https://user-images.githubusercontent.com/6324545/166504169-81fd77e8-df5b-40f0-9c1f-9735e59b2723.png)
@@ -73,13 +97,13 @@ Connecting to your inverter can be acheived in two ways:
 ## Engergy Dashboard Configuration
 
 ![image](https://user-images.githubusercontent.com/6324545/166470207-44236718-3f6c-4995-99fe-0a214eda49e6.png)
- 
 
 ### Energy Dashboard Values
 
 ⚠️Some values won't appear until a small amount of data has passed through that value. You may need to wait 24hrs before you can setup the energy dashboard.
 
 **Electricity Grid**
+
 - grid_daily
 - feedin_daily
 
@@ -99,7 +123,6 @@ Connecting to your inverter can be acheived in two ways:
 
 **The [wiki](https://github.com/StealthChesnut/HA-FoxESS-Modbus/wiki/Data-Register-Reference---H1-AC1) has references for the registers.**
 
-
 <br>
 <br>
 
@@ -108,7 +131,7 @@ Connecting to your inverter can be acheived in two ways:
 Please read and understand before using this plugin:
 
 > This plugin has been developed as a personal project, with no connection to the official brand of FoxESS, use of this plugin is intended for use by the community without fee but has no warrenty or liability should any damage, harm or undesired results happen as a result of using this plugin. We strongly recommend that only competently trained individuals attempt to wire the additional connections required for this plugin to function. There is a risk of personal or device damage/harm.
-You have been warned!
+> You have been warned!
 
 ---
 

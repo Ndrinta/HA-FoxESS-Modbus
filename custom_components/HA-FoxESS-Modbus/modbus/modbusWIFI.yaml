@@ -1,0 +1,17 @@
+--- # ---------------------------USB/Serial--------------------------------------
+# Created by https://github.com/StealthChesnut/HA-FoxESS-Modbus
+# Modbus Config for Fox ESS Hybrid H1 Inverter
+# Adjust port setting to match USB port in use
+# "slave" setting can be changed on Inverter Menu - Settings, Communication, RS485 but is default to 247 from factory
+
+# ---------------------------WIFI/LAN----------------------------------------
+# If using USR Wifi converter, remove lines 6 through 13 and uncomment the following
+#
+- name: HA-FoxESS-Modbus-LAN
+  type: tcp
+  host: !secret FoxESSInverterIP
+  port: 502
+  # ---------------------------------------------------------------------------
+
+  sensor: !include sensorsH1RS485.yaml
+  binary_sensors: !include sensor-binaryH1RS485.yaml

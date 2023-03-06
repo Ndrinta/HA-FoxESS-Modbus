@@ -13,5 +13,5 @@
   port: !secret FoxESSRS485
   stopbits: 1
 
-  sensor: !include sensorsH1RS485.yaml
+  sensors: !include sensorsH1RS485.yaml
   binary_sensors: !include sensor-binaryH1RS485.yaml

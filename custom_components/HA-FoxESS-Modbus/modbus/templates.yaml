@@ -1,0 +1,101 @@
+# FoxESS Modbus Plugin - Configuration and Sensor Mappings
+# Source https://github.com/StealthChesnut/HA-FoxESS-Modbus
+# This file isn't a valid configuration file!
+
+#Templates enable math operations against states/values to give us better data
+
+- sensor:
+    - name: "BMS Cell Delta"
+      unit_of_measurement: "mV"
+      device_class: voltage
+      state: >
+        {% if int(states('sensor.bms_cell_mv_high')) - int(states('sensor.bms_cell_mv_low')) | float(default=0) > 0 %}
+        {{ int(states('sensor.bms_cell_mv_high')) - int(states('sensor.bms_cell_mv_low')) }}
+        {% else %}
+        0 
+        {% endif %}
+    - name: "Battery Discharge"
+      device_class: "power"
+      unit_of_measurement: "kW"
+      state: >
+        {% if (states('sensor.battery_discharge_power') | float(default=0) ) > 0 %}
+        {{ states('sensor.battery_discharge_power') | float(default=0) * 1 }}
+        {% else %}
+        0 
+        {% endif %}
+    - name: "Battery Charge"
+      device_class: "power"
+      unit_of_measurement: "kW"
+      state: >
+        {% if (states('sensor.battery_discharge_power') | float(default=0) ) < 0 %}
+        {{ states('sensor.battery_discharge_power') | float(default=0) * -1 }}
+        {% else %}
+        0 
+        {% endif %}
+    - name: "Feed In Power"
+      device_class: "power"
+      unit_of_measurement: "kW"
+      state: >
+        {% if (states('sensor.grid_ct') | float(default=0) ) > 0 %}
+        {{ states('sensor.grid_ct') | float(default=0) * 1 }}
+        {% else %}
+        0 
+        {% endif %}
+    - name: "Grid Consumption"
+      device_class: "power"
+      unit_of_measurement: "kW"
+      state: >
+        {% if (states('sensor.grid_ct') | float(default=0) ) < 0 %}
+        {{ states('sensor.grid_ct') | float(default=0) * -1 }}
+        {% else %}
+        0 
+        {% endif %}
+    - name: "PV Power Now"
+      device_class: "power"
+      unit_of_measurement: "kW"
+      state: >
+        {{ (states('sensor.pv1_power') | float(default=0) + states('sensor.pv2_power') | float(default=0) ) * 1 }}
+    - name: "PV Energy Daily"
+      device_class: "energy"
+      unit_of_measurement: "kWh"
+      state: >
+        {{ ((states('sensor.pv1_daily') | float(default=0) + states('sensor.pv2_daily') | float(default=0) ) * 1 ) | round(2) }}
+    - name: "System Losses"
+      device_class: "power"
+      unit_of_measurement: "kW"
+      state: >
+        {{ ((states('sensor.pv1_power') | float(default=0)
+        + states('sensor.pv2_power') | float(default=0)
+        + states('sensor.grid_consumption') | float(default=0)
+        + states('sensor.battery_discharge') | float(default=0)
+        - states('sensor.battery_charge') | float(default=0)
+        - states('sensor.feed_in_power') | float(default=0)
+        - states('sensor.load_power') | float(default=0) )) | round(2) }}
+    - name: "Time Period 1 - Start Time"
+      icon: "mdi:calendar-clock"
+      state: >
+        {% set raw_time = states('sensor.time_period_1_start') | int %}
+        {% set hours = raw_time // 256 %}
+        {% set minutes = raw_time - (hours * 256) %}
+        {{ strptime(hours | string + ":" + minutes | string, '%H:%M').time() }}
+    - name: "Time Period 1 - End Time"
+      icon: "mdi:calendar-clock"
+      state: >
+        {% set raw_time = states('sensor.time_period_1_end') | int %}
+        {% set hours = raw_time // 256 %}
+        {% set minutes = raw_time - (hours * 256) %}
+        {{ strptime(hours | string + ":" + minutes | string, '%H:%M').time() }}
+    - name: "Time Period 2 - Start Time"
+      icon: "mdi:calendar-clock"
+      state: >
+        {% set raw_time = states('sensor.time_period_2_start') | int %}
+        {% set hours = raw_time // 256 %}
+        {% set minutes = raw_time - (hours * 256) %}
+        {{ strptime(hours | string + ":" + minutes | string, '%H:%M').time() }}
+    - name: "Time Period 2 - End Time"
+      icon: "mdi:calendar-clock"
+      state: >
+        {% set raw_time = states('sensor.time_period_2_end') | int %}
+        {% set hours = raw_time // 256 %}
+        {% set minutes = raw_time - (hours * 256) %}
+        {{ strptime(hours | string + ":" + minutes | string, '%H:%M').time() }}

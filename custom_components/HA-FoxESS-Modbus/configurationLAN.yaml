@@ -1,0 +1,8 @@
+# FoxESS Modbus Plugin - Configuration and Sensor Mappings
+# Source https://github.com/StealthChesnut/HA-FoxESS-Modbus
+# This file isn't a valid configuration file!
+
+modbus: !include ./modbus/modbusLAN.yaml
+sensor: !include ./modbus/sensors.yaml
+template: !include ./modbus/templates.yaml
+utility_meter: !include ./modbus/utilitymeters.yaml

@@ -1,0 +1,16 @@
+--- # ---------------------------USB/Serial--------------------------------------
+# Created by https://github.com/StealthChesnut/HA-FoxESS-Modbus
+# Modbus Config for Fox ESS Hybrid H1 Inverter
+# Adjust port setting to match USB port in use
+# "slave" setting can be changed on Inverter Menu - Settings, Communication, RS485 but is default to 247 from factory
+
+- name: "Time Period 1 - Enabled"
+  address: 41001
+  scan_interval: 60
+  slave: 247
+  input_type: input
+- name: "Time Period 2 - Enabled"
+  address: 41004
+  scan_interval: 60
+  slave: 247
+  input_type: input

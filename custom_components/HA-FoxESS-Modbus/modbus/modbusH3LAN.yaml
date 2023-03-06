@@ -1,0 +1,17 @@
+# v0.1
+# Modbus Config for Fox ESS Hybrid H3 Inverter via TCP / Ethernet / WIFI
+# Adapted by https://github.com/rsaemann/HA-FoxESS-H3-Modbus
+# Original for H1 inverters Created by https://github.com/StealthChesnut/HA-FoxESS-Modbus
+# Tested with Elfin EW11A RS485 to WIFI converter
+# ---------------------------RS485 Connection----------------------------------------
+#  For use when connecting to RS485 port of inverter
+#
+- name: HA-FoxESS-Modbus-LAN
+  type: tcp
+  host: 192.168.178.189 # set to USR devices ip address
+  port: 502
+  #
+  # ---------------------------------------------------------------------------
+  # Device ID ("Slave", standard: 247) can be set in inverter menu configuration->communication->RS485->DeviceID
+
+  sensors: !include sensorsH3.yaml
